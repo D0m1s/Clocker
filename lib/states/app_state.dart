@@ -18,6 +18,7 @@ class AppState extends ChangeNotifier {
 
   void toggleClock() {
     if (!clockedIn) {
+      timeElapsed = Duration();
       clockInTimes.add(DateTime.now());
       buttonText = "CLOCK OUT";
       buttonColor = Colors.red;

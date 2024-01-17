@@ -1,3 +1,4 @@
+import 'package:clockin_clockout_flutter/pages/all_shifts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../states/app_state.dart';
@@ -10,23 +11,41 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(56, 56, 56, 1),
-      body: Center(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                width: double.infinity,
-                child: TopTimingCard()
-              ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                width: double.infinity,
-                child: ClockButton()
-              ),
-            ],
-          ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: TopTimingCard()
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 15, right: 15),
+                  width: double.infinity,
+                    child: OutlinedButton(
+                      child: Text("View all shifts",
+                          style:
+                              TextStyle(fontSize: 15, color: Colors.white)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AllShiftsPage()),
+                        );
+                      },
+                    )
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              width: double.infinity,
+              child: ClockButton()
+            ),
+          ],
         ),
       ),
     );
@@ -65,9 +84,9 @@ class TopTimingCard extends StatelessWidget {
       currentColor = defaultCardColor;
     }
 
-    var hours = appState.timeElapsed.inHours.toString().padLeft(2, '0').toString();
-    var minutes = appState.timeElapsed.inMinutes.remainder(60).toString().padLeft(2, '0').toString();
-    var seconds = appState.timeElapsed.inSeconds.remainder(60).toString().padLeft(2, '0').toString();
+    var hours = appState.timeElapsed.inHours.toString().padLeft(2, '0');
+    var minutes = appState.timeElapsed.inMinutes.remainder(60).toString().padLeft(2, '0');
+    var seconds = appState.timeElapsed.inSeconds.remainder(60).toString().padLeft(2, '0');
 
     return Card(
       color: currentColor,
@@ -76,7 +95,7 @@ class TopTimingCard extends StatelessWidget {
         children: [
           Card(
             color: Color.fromRGBO(34, 34, 34, 1),
-            child: Container(margin: const EdgeInsets.all(10),child: Text("Current work stats", style: TextStyle(fontSize: 20, color: Colors.white)))
+            child: Container(margin: const EdgeInsets.all(10),child: Text("Current shift", style: TextStyle(fontSize: 20, color: Colors.white)))
           ),
           Container(
             margin: const EdgeInsets.all(10),
