@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         home: FutureBuilder<AppState>(
           future: Future.value(
-              appState), // Use Future.value to create a completed future
+              appState),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return ColoredBox(color: Color.fromRGBO(56, 56, 56, 1));
