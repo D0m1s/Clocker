@@ -84,9 +84,10 @@ class TopTimingCard extends StatelessWidget {
       currentColor = defaultCardColor;
     }
 
-    var hours = appState.timeElapsed.inHours.toString().padLeft(2, '0');
-    var minutes = appState.timeElapsed.inMinutes.remainder(60).toString().padLeft(2, '0');
-    var seconds = appState.timeElapsed.inSeconds.remainder(60).toString().padLeft(2, '0');
+    Duration duration = Duration(seconds: appState.timeElapsed);
+    var hours = duration.inHours.toString().padLeft(2, '0');
+    var minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    var seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
 
     return Card(
       color: currentColor,

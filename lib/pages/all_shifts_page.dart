@@ -10,7 +10,8 @@ class AllShiftsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    var groupedByYear = groupBy(appState.clockOutTimes, (DateTime date) => date.year);
+    var groupedByYear =
+        groupBy(appState.clockOutTimes, (DateTime date) => date.year);
 
     if (groupedByYear.isEmpty) {
       return Scaffold(
@@ -19,7 +20,11 @@ class AllShiftsPage extends StatelessWidget {
           child: Center(
             child: Text(
               "No data to display",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 1),
             ),
           ),
         ),
@@ -40,7 +45,11 @@ class AllShiftsPage extends StatelessWidget {
                       margin: EdgeInsets.only(left: 15, top: 10, bottom: 5),
                       child: Text(
                         year.toString(),
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 1),
                       ),
                     ),
                     for (int i = dates.length - 1; i >= 0; i--)
@@ -51,9 +60,8 @@ class AllShiftsPage extends StatelessWidget {
                   ],
                 );
               }).toList(),
-              ),
-          )
-      );
+            ),
+          ));
     }
   }
 }

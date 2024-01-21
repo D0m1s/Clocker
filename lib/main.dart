@@ -10,17 +10,27 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final appState = AppState();
     return ChangeNotifierProvider(
-      create: (context) => AppState(),
+      create: (context) => appState,
       child: MaterialApp(
         title: 'Clocker',
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: FutureBuilder<AppState>(
+          future: Future.value(
+              appState), // Use Future.value to create a completed future
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ColoredBox(color: Color.fromRGBO(56, 56, 56, 1));
+            } else {
+              return const HomePage();
+            }
+          },
+        ),
       ),
     );
   }

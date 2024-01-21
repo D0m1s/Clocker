@@ -10,8 +10,8 @@ class ShiftCard extends StatelessWidget {
     this.color = const Color.fromRGBO(43, 43, 43, 1),
     this.clockInTime,
     this.clockOutTime,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
