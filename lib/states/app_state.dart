@@ -17,6 +17,12 @@ class AppState extends ChangeNotifier {
   var buttonColor = Colors.green;
   var buttonText = "CLOCK IN";
 
+  // deletion
+  var selectedClockInTimes = <DateTime>[];
+  var selectedClockOutTimes = <DateTime>[];
+  var selectionMode = false;
+  var isAnimationRunning = false;
+
   AppState() {
     loadAppState();
   }
@@ -76,5 +82,45 @@ class AppState extends ChangeNotifier {
     clockedIn = false;
     buttonText = "CLOCK IN";
     buttonColor = Colors.green;
+  }
+
+  void updateShifts() {
+    saveShiftData(clockInTimes, clockOutTimes);
+    notifyListeners();
+  }
+
+  void addSelection(DateTime clockIn, DateTime clockOut) {
+    selectedClockInTimes.add(clockIn);
+    selectedClockOutTimes.add(clockOut);
+    notifyListeners();
+  }
+
+  void deleteSelection() {
+    for (int i = selectedClockInTimes.length - 1; i >= 0; i--) {
+      int indexToRemove = clockInTimes.indexOf(selectedClockInTimes[i]);
+      if (indexToRemove != -1 && clockOutTimes.indexOf(selectedClockOutTimes[i]) == indexToRemove) {
+        clockInTimes.removeAt(indexToRemove);
+        clockOutTimes.removeAt(indexToRemove);
+      }
+    }
+
+    saveShiftData(clockInTimes, clockOutTimes);
+    setSelectionMode(false);
+  }
+
+  void setSelectionMode(bool status) {
+    selectionMode = status;
+
+    if (!status) {
+      selectedClockInTimes = <DateTime>[];
+      selectedClockOutTimes = <DateTime>[];
+    }
+
+    notifyListeners();
+  }
+
+  void setAnimationMode(bool mode) {
+    isAnimationRunning = mode;
+    notifyListeners();
   }
 }

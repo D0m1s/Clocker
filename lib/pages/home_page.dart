@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
     return Scaffold(
       backgroundColor: Color.fromRGBO(56, 56, 56, 1),
       body: SafeArea(
@@ -30,6 +31,7 @@ class HomePage extends StatelessWidget {
                           style:
                               TextStyle(fontSize: 15, color: Colors.white)),
                       onPressed: () {
+                        appState.setSelectionMode(false);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
