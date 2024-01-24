@@ -30,7 +30,11 @@ Future<File> saveShiftData(List<DateTime> clockInTimes, List<DateTime> clockOutT
   await file.writeAsString("$listLength\n", mode: FileMode.write);
 
   for (int i = 0; i < listLength; i++) {
-    await file.writeAsString("${clockInTimes[i]}\n${clockOutTimes[i]}\n", mode: FileMode.append);
+    if (i < clockOutTimes.length) {
+      await file.writeAsString("${clockInTimes[i]}\n${clockOutTimes[i]}\n", mode: FileMode.append);
+    } else {
+      await file.writeAsString("${clockInTimes[i]}\n \n", mode: FileMode.append);
+    }
   }
 
   return file;
@@ -59,6 +63,11 @@ Future<DateTime?> loadAppStateLastClockIn() async {
   }
 
   return null;
+}
+
+Future<void> clearLastClockIn() async {
+  final appStateSave = await getFile(appStateSaveFilename);
+  appStateSave.writeAsString("", mode: FileMode.write);
 }
 
 Future<List<DateTime>> loadClockInTimes() async {
@@ -92,8 +101,10 @@ Future<List<DateTime>> loadClockOutTimes() async {
   List<DateTime> clockTimeList = <DateTime>[];
 
   for (int i = 1; i <= listSize; i++) {
-    var parsedTime = DateTime.parse(lines[2 * i]);
-    clockTimeList.add(parsedTime);
+    if (lines[2 * i].length > 1) {
+      var parsedTime = DateTime.parse(lines[2 * i]);
+      clockTimeList.add(parsedTime);
+    }
   }
 
   return clockTimeList;

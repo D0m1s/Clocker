@@ -39,7 +39,7 @@ class AppState extends ChangeNotifier {
       return this;
     }
 
-    if (clockInTimes.isEmpty || !clockInTimes.last.isAtSameMomentAs(latestClockInTime)) {
+    if (clockInTimes.isEmpty || !clockInTimes.last.isAtSameMomentAs(latestClockInTime) || clockOutTimes.isEmpty) {
       clockInTimes.add(latestClockInTime);
       clockIn();
     } 
@@ -102,6 +102,12 @@ class AppState extends ChangeNotifier {
         clockInTimes.removeAt(indexToRemove);
         clockOutTimes.removeAt(indexToRemove);
       }
+    }
+
+    if (clockOutTimes.isEmpty && !clockedIn) {
+      timeElapsed = 0;
+      clockInTimes = <DateTime>[];
+      clearLastClockIn();
     }
 
     saveShiftData(clockInTimes, clockOutTimes);
