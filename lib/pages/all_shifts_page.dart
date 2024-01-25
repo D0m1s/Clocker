@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../states/app_state.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../excel_exporter.dart';
 
 class AllShiftsPage extends StatefulWidget {
   const AllShiftsPage({super.key});
@@ -28,7 +29,7 @@ class _AllShiftsPageState extends State<AllShiftsPage> {
           child: Stack(
             children: [
               ListView(
-                padding: EdgeInsets.only(bottom: appState.selectionMode ? 85 : 0),
+                padding: EdgeInsets.only(bottom: appState.selectionMode ? 85 : 0, top: 15),
                 children: groupedByYear.entries.map((entry) {
                   int year = entry.key;
                   List<DateTime> dates = entry.value;
@@ -37,7 +38,50 @@ class _AllShiftsPageState extends State<AllShiftsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 15, top: 10, bottom: 5),
+                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                        width: double.infinity,
+                        child: Card(
+                            color: Color.fromRGBO(43, 43, 43, 1),
+                            child: Container(
+                                margin: const EdgeInsets.all(10),
+                                child: Text(
+                                    "Total time worked: ${appState.totalTimeWorkedAsString()}",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white)))),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(left: 15, right: 15),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: OutlinedButton.styleFrom(backgroundColor: Color.fromRGBO(77, 94, 80, 1)),
+                            child: Text("Export as Excel spreadsheet",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.white)),
+                            onPressed: () async {
+                              final snackBar = SnackBar(
+                                  content: Text(
+                                      "Exported to Downloads",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.white)
+                                          ),
+                                  backgroundColor:
+                                      Color.fromRGBO(26, 26, 26, 1));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              await exportDateTimesToExcel(appState.clockInTimes, appState.clockOutTimes, appState.totalTimeWorkedInSeconds());
+                            },
+                          )),
+                      Container(
+                        margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                        width: double.infinity,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Color.fromRGBO(34, 34, 34, 1),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15, bottom: 7),
                         child: Text(
                           year.toString(),
                           style: TextStyle(

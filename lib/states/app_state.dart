@@ -129,4 +129,24 @@ class AppState extends ChangeNotifier {
     isAnimationRunning = mode;
     notifyListeners();
   }
+
+  int totalTimeWorkedInSeconds() {
+    int totalTimeWorkedInSeconds = 0;
+
+    for (int i = 0; i < clockOutTimes.length; i++) {
+      totalTimeWorkedInSeconds += clockOutTimes[i].difference(clockInTimes[i]).inSeconds;
+    }
+
+    return totalTimeWorkedInSeconds;
+  }
+
+  String totalTimeWorkedAsString() {
+    Duration durationFromSeconds = Duration(seconds: totalTimeWorkedInSeconds());
+
+    var hours = durationFromSeconds.inHours.toString().padLeft(2, '0');
+    var minutes = durationFromSeconds.inMinutes.remainder(60).toString().padLeft(2, '0');
+    var seconds = durationFromSeconds.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    return "$hours:$minutes:$seconds";
+  }
 }
