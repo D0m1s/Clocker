@@ -11,7 +11,7 @@ A simple cock-in and clock-out app for Android made with Flutter
 ## Features
 - Shift saving in files
 - Shift deletion
-- Summary of all shift time worked!
+- Summary of all shift time worked
 
 - Export shift data as Excel spreadsheet (.xlsx)
 - Clock in progress persists through app and phone restarts
