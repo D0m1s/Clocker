@@ -50,7 +50,7 @@ class _AllShiftsPageState extends State<AllShiftsPage> {
                                         fontSize: 20, color: Colors.white)))),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(left: 15, right: 15),
+                          margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
                           width: double.infinity,
                           child: ElevatedButton(
                             style: OutlinedButton.styleFrom(backgroundColor: Color.fromRGBO(77, 94, 80, 1)),
@@ -71,15 +71,6 @@ class _AllShiftsPageState extends State<AllShiftsPage> {
                               await exportDateTimesToExcel(appState.clockInTimes, appState.clockOutTimes, appState.totalTimeWorkedInSeconds());
                             },
                           )),
-                      Container(
-                        margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
-                        width: double.infinity,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Color.fromRGBO(34, 34, 34, 1),
-                        ),
-                      ),
                       Container(
                         margin: EdgeInsets.only(left: 15, bottom: 7),
                         child: Text(
@@ -157,32 +148,36 @@ class SelectionModeBar extends StatelessWidget {
           color: Color.fromRGBO(31, 31, 31, 1),
           padding: EdgeInsets.all(15),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "${appState.selectedClockInTimes.length} item(s) selected",
-                style: TextStyle(fontSize: 18, color: Colors.white,),
+              Card(
+                color: Color.fromRGBO(17, 17, 17, 1),
+                child: SizedBox(
+                  width: 40,
+                  child: Text(
+                    "${appState.selectedClockInTimes.length}",
+                    style: TextStyle(fontSize: 18, color: Colors.white,),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 156, 43, 43)),
-                    onPressed: () {
-                      // delete pressed
-                      appState.deleteSelection();
-                    },
-                    child: Text("Delete", style: TextStyle(fontSize: 18, color: Colors.white,)),
-                  ),
-                  SizedBox(width: 10,),
-                  OutlinedButton(
-                    onPressed: () {
-                      // cancel pressed
-                      appState.setSelectionMode(false);
-                    },
-                    child: Text("Cancel", style: TextStyle(fontSize: 18, color: Colors.white,)),
-                  ),
-                ],
-              )
+              SizedBox(width: 10,),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 156, 43, 43)),
+                onPressed: () {
+                  // delete pressed
+                  appState.deleteSelection();
+                },
+                child: Text("Delete", style: TextStyle(fontSize: 18, color: Colors.white,)),
+              ),
+              SizedBox(width: 10,),
+              OutlinedButton(
+                onPressed: () {
+                  // cancel pressed
+                  appState.setSelectionMode(false);
+                },
+                child: Text("Cancel", style: TextStyle(fontSize: 18, color: Colors.white,)),
+              ),
             ],
           ),
         ),
