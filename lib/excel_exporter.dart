@@ -111,8 +111,13 @@ Future<void> exportDateTimesToExcel(List<DateTime> clockInTimes, List<DateTime> 
 
   // at least it can save without issues (mostly)
   var fileBytes = excel.save();
-  var file = File("/storage/emulated/0/Download/ClockerShiftSummary.xlsx");
-  await file.writeAsBytes(fileBytes!);
+
+  var yearMonthDay = "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}";
+  var hourMinuteSecond = "${DateTime.now().hour}-${DateTime.now().minute}-${DateTime.now().second}";
+  var fileName = "ClockerSummary date $yearMonthDay time $hourMinuteSecond.xlsx";
+
+  var file = File("/storage/emulated/0/Download/$fileName");
+  await file.writeAsBytes(fileBytes!, mode: FileMode.writeOnly);
 }
 
 String getRowHexColorByIndex(int index) {
